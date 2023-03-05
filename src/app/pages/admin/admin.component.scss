@@ -1,0 +1,15 @@
+::ng-deep {
+    .p-sidebar-right{
+        width: 80%!important;
+        input {width: 100%;}
+    }
+    .p-calendar{
+        width: 100%;
+    }
+   
+}
+
+.create-button {
+    position: fixed;
+    bottom: 90px;
+}

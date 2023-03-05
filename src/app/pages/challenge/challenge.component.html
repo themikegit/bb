@@ -1,0 +1,43 @@
+<app-page-header [pageTitle]="'Challenges'"></app-page-header>
+<div *ngIf="challenges$ | async as data">
+  <div
+    (click)="cardClick(challenge.id, data)"
+    pRipple
+    *ngFor="let challenge of data"
+    class="challenge-card"
+  >
+    <div class="flex justify-content-between align-content-center p-2">
+      <i
+        *ngIf="challenge.status === 'COMPLETED'"
+        class="pi pi-check-circle"
+        style="font-size: 2rem"
+      ></i>
+
+      <h3>{{ challenge.title }}</h3>
+      <h5>{{ challenge.date?.toDate() | date }}</h5>
+    </div>
+  </div>
+  <p-sidebar [(visible)]="isVisible" [fullScreen]="true" [baseZIndex]="10000">
+    <div>
+      <h3>{{ selectedChc.title }}</h3>
+      <div>
+        <iframe
+          src="https://player.vimeo.com/video/42805026?h=2e4f83c70a"
+          width="100%"
+          height="100%"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div [innerHTML]="selectedChc.description"></div>
+      <button
+        *ngIf="selectedChc.status !== 'COMPLETED'"
+        class="w-full m-1"
+        pButton
+        type="button"
+        label="COMPLETE"
+        (click)="completeWod()"
+      ></button>
+    </div>
+  </p-sidebar>
+</div>
