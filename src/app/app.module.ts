@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from 'src/environments/environment.prod';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { ButtonModule } from 'primeng/button';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -21,6 +20,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,9 @@ import { TableModule } from 'primeng/table';
     InputTextModule,
     SidebarModule,
     TableModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent],
