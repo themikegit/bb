@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-navigation',
@@ -30,6 +31,7 @@ import { Component } from '@angular/core';
         class=" p-button-lg p-button-rounded  p-button-text"
       ></button>
       <button
+        *ngIf="u === 'admin'"
         routerLink="admin"
         pButton
         pRipple
@@ -41,4 +43,16 @@ import { Component } from '@angular/core';
   `,
   styles: [],
 })
-export class NavigationComponent {}
+export class NavigationComponent {
+  constructor(private afa: AngularFireAuth) {}
+  u: any;
+  ngOnInit() {
+    this.afa.user.subscribe((u) => {
+      // u?.updateProfile({
+      //   displayName: 'admin',
+      // });
+
+      this.u = u?.displayName;
+    });
+  }
+}

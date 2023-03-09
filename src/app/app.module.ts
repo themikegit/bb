@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +24,9 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { VideoUrlPipe } from './pages/challenge/video-url.pipe';
+import { VideoFrameComponent } from './components/video-frame/video-frame.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,8 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     ChallengeComponent,
     HomeComponent,
     AdminComponent,
+    VideoUrlPipe,
+    VideoFrameComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +56,12 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

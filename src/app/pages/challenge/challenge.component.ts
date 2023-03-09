@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map, Observable } from 'rxjs';
 import { arrayUnion } from '@angular/fire/firestore';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-challenge',
@@ -15,7 +16,8 @@ export class ChallengeComponent {
   constructor(
     private router: Router,
     private afs: AngularFirestore,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    public sanit: DomSanitizer
   ) {}
 
   challenges$!: Observable<any>;
@@ -26,6 +28,7 @@ export class ChallengeComponent {
     title: '',
     description: '',
     status: '',
+    video: '',
   };
 
   ngOnInit() {
@@ -39,11 +42,8 @@ export class ChallengeComponent {
             const id = w.payload.doc.id;
             const data = w.payload.doc.data();
             if (data.users?.some((w: any) => w.uid === this.uid)) {
-              console.log('padd');
-
               data.status = 'COMPLETED';
             }
-            console.log(data.users);
 
             return { id, ...data };
           });

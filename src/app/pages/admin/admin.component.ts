@@ -23,6 +23,7 @@ export class AdminComponent {
   description!: string;
   title!: string;
   date!: Date;
+  videoUrl!: string;
 
   editMode!: boolean;
 
@@ -46,6 +47,7 @@ export class AdminComponent {
     this.selectedWod = ch;
     this.title = ch.title;
     this.description = ch.description;
+    this.videoUrl = ch.video;
     this.isVisible = !this.isVisible;
     this.date = ch.date?.toDate();
   }
@@ -62,6 +64,7 @@ export class AdminComponent {
         title: this.title,
         description: this.description,
         date: this.date,
+        video: this.videoUrl,
       });
     }
     if (!this.editMode) {
@@ -69,6 +72,7 @@ export class AdminComponent {
         title: this.title,
         description: this.description,
         date: this.date,
+        video: this.videoUrl,
       });
     }
     this.isVisible = !this.isVisible;

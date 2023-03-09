@@ -52,6 +52,18 @@
         ></p-editor>
       </div>
       <div class="mb-2">
+        <span class="p-float-label">
+          <input
+            class="w-full"
+            id="float-input"
+            type="text"
+            pInputText
+            [(ngModel)]="videoUrl"
+          />
+          <label for="float-input">VideoURL</label>
+        </span>
+      </div>
+      <div class="mb-2">
         <p-calendar
           appendTo="body"
           class="w-full"

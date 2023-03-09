@@ -20,16 +20,10 @@
   <p-sidebar [(visible)]="isVisible" [fullScreen]="true" [baseZIndex]="10000">
     <div>
       <h3>{{ selectedChc.title }}</h3>
-      <div>
-        <iframe
-          src="https://player.vimeo.com/video/42805026?h=2e4f83c70a"
-          width="100%"
-          height="100%"
-          frameborder="0"
-          allowfullscreen
-        ></iframe>
-      </div>
+
       <div [innerHTML]="selectedChc.description"></div>
+      <app-video-frame [videoUrl]="selectedChc.video"></app-video-frame>
+
       <button
         *ngIf="selectedChc.status !== 'COMPLETED'"
         class="w-full m-1"
