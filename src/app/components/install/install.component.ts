@@ -4,12 +4,12 @@ import { Component } from '@angular/core';
   selector: 'app-install',
   template: `
     <button
-      icon="pi pi-sign-out"
+      icon="pi pi-download"
       (click)="installApp()"
       class="w-full"
       pButton
       type="button"
-      label="LogOUT"
+      label="install"
     ></button>
   `,
   styles: [],
