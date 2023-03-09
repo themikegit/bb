@@ -27,6 +27,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { VideoUrlPipe } from './pages/challenge/video-url.pipe';
 import { VideoFrameComponent } from './components/video-frame/video-frame.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { InstallComponent } from './components/install/install.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AdminComponent,
     VideoUrlPipe,
     VideoFrameComponent,
+    InstallComponent,
   ],
   imports: [
     BrowserModule,
