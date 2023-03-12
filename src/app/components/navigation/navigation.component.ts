@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navigation',
   template: `
-    <div class="flex justify-content-around p-3">
+    <div *ngIf="user$ | async as user" class="flex justify-content-around p-3">
       <button
         routerLink="home"
         pButton
@@ -31,7 +32,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
         class=" p-button-lg p-button-rounded  p-button-text"
       ></button>
       <button
-        *ngIf="u === 'admin'"
+        *ngIf="user.uid === 'YkdAANXaC2P9K6eb4tF0BMCRNfv1'"
         routerLink="admin"
         pButton
         pRipple
@@ -45,14 +46,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class NavigationComponent {
   constructor(private afa: AngularFireAuth) {}
-  u: any;
+  user$!: Observable<any>;
   ngOnInit() {
-    this.afa.user.subscribe((u) => {
-      // u?.updateProfile({
-      //   displayName: 'admin',
-      // });
-
-      this.u = u?.displayName;
-    });
+    this.user$ = this.afa.user;
   }
 }

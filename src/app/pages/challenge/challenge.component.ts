@@ -6,23 +6,26 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map, Observable } from 'rxjs';
 import { arrayUnion } from '@angular/fire/firestore';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-challenge',
   templateUrl: './challenge.component.html',
   styleUrls: ['./challenge.component.scss'],
+  providers: [MessageService],
 })
 export class ChallengeComponent {
   constructor(
     private router: Router,
     private afs: AngularFirestore,
     private auth: AngularFireAuth,
-    public sanit: DomSanitizer
+    public sanit: DomSanitizer,
+    public messageService: MessageService
   ) {}
 
   challenges$!: Observable<any>;
   isVisible: boolean = false;
-  uid!: string | null;
+  user!: any;
   selectedChc = {
     id: '',
     title: '',
@@ -32,7 +35,8 @@ export class ChallengeComponent {
   };
 
   ngOnInit() {
-    this.uid = localStorage.getItem('uid');
+    this.user = JSON.parse(localStorage.getItem('user')!);
+
     this.challenges$ = this.afs
       .collection('/wod')
       .snapshotChanges()
@@ -41,7 +45,7 @@ export class ChallengeComponent {
           return wods.map((w: any) => {
             const id = w.payload.doc.id;
             const data = w.payload.doc.data();
-            if (data.users?.some((w: any) => w.uid === this.uid)) {
+            if (data.users?.some((w: any) => w.uid === this.user.uid)) {
               data.status = 'COMPLETED';
             }
 
@@ -57,9 +61,14 @@ export class ChallengeComponent {
       .doc(this.selectedChc.id)
       .update({
         users: arrayUnion({
-          uid: this.uid,
+          uid: this.user.uid,
         }),
       });
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Congratulations! Goal completed',
+    });
     this.isVisible = !this.isVisible;
   }
 

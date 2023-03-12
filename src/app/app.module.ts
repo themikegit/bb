@@ -14,11 +14,16 @@ import { ChallengeComponent } from './pages/challenge/challenge.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CalendarModule } from 'primeng/calendar';
 import { AdminComponent } from './pages/admin/admin.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
+import { MessageModule } from 'primeng/message';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
+import { TabViewModule } from 'primeng/tabview';
+
 import { TableModule } from 'primeng/table';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -27,7 +32,13 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { VideoUrlPipe } from './pages/challenge/video-url.pipe';
 import { VideoFrameComponent } from './components/video-frame/video-frame.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { InstallComponent } from './components/install/install.component';
+import { VerifyMailComponent } from './pages/verify-mail/verify-mail.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { LoginComponent } from './components/login/login.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
+
+import { ScrollerModule } from 'primeng/scroller';
 
 @NgModule({
   declarations: [
@@ -40,13 +51,17 @@ import { InstallComponent } from './components/install/install.component';
     AdminComponent,
     VideoUrlPipe,
     VideoFrameComponent,
-    InstallComponent,
+    VerifyMailComponent,
+    SignInComponent,
+    SignUpComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     RippleModule,
     ButtonModule,
@@ -55,6 +70,12 @@ import { InstallComponent } from './components/install/install.component';
     InputTextModule,
     SidebarModule,
     TableModule,
+    ToastModule,
+    DropdownModule,
+    MessageModule,
+    InputSwitchModule,
+    TabViewModule,
+    ScrollerModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
@@ -62,10 +83,10 @@ import { InstallComponent } from './components/install/install.component';
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [],
   bootstrap: [AppComponent],
+  providers: [],
 })
 export class AppModule {}

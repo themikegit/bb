@@ -1,29 +1,35 @@
 <app-page-header [pageTitle]="'Challenges'"></app-page-header>
-<div *ngIf="challenges$ | async as data">
+<div class="challenge-list" *ngIf="challenges$ | async as data">
   <div
     (click)="cardClick(challenge.id, data)"
     pRipple
     *ngFor="let challenge of data"
-    class="challenge-card"
   >
-    <div class="flex justify-content-between align-content-center p-2">
-      <i
-        *ngIf="challenge.status === 'COMPLETED'"
-        class="pi pi-check-circle"
-        style="font-size: 2rem"
-      ></i>
+    <div class="challenge-card" *ngIf="challenge.active">
+      <div class="flex justify-content-between align-content-center p-2">
+        <i
+          *ngIf="challenge.status === 'COMPLETED'"
+          class="pi pi-check-circle"
+          style="font-size: 2rem"
+        ></i>
 
-      <h3>{{ challenge.title }}</h3>
-      <h5>{{ challenge.date?.toDate() | date }}</h5>
+        <h3>{{ challenge.title }}</h3>
+        <h5>{{ challenge.date?.toDate() | date }}</h5>
+      </div>
     </div>
   </div>
+
   <p-sidebar [(visible)]="isVisible" [fullScreen]="true" [baseZIndex]="10000">
-    <div>
-      <h3>{{ selectedChc.title }}</h3>
-
+    <ng-template pTemplate="header"
+      ><h3>{{ selectedChc.title }}</h3></ng-template
+    >
+     
+    <ng-template pTemplate="content">
       <div [innerHTML]="selectedChc.description"></div>
-      <app-video-frame [videoUrl]="selectedChc.video"></app-video-frame>
-
+      <app-video-frame [videoUrl]="selectedChc.video"></app-video-frame
+    ></ng-template>
+     
+    <ng-template pTemplate="footer">
       <button
         *ngIf="selectedChc.status !== 'COMPLETED'"
         class="w-full m-1"
@@ -31,7 +37,9 @@
         type="button"
         label="COMPLETE"
         (click)="completeWod()"
-      ></button>
-    </div>
+      ></button
+    ></ng-template>
+    <div></div>
   </p-sidebar>
+  <p-toast position="top-center"></p-toast>
 </div>

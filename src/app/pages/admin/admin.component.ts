@@ -27,6 +27,7 @@ export class AdminComponent {
 
   editMode!: boolean;
 
+  active!: boolean;
   ngOnInit() {
     this.challenges$ = this.afs
       .collection('/wod')
@@ -50,6 +51,7 @@ export class AdminComponent {
     this.videoUrl = ch.video;
     this.isVisible = !this.isVisible;
     this.date = ch.date?.toDate();
+    this.active = ch.active;
   }
 
   addWod() {
@@ -65,6 +67,7 @@ export class AdminComponent {
         description: this.description,
         date: this.date,
         video: this.videoUrl,
+        active: this.active,
       });
     }
     if (!this.editMode) {
@@ -73,6 +76,7 @@ export class AdminComponent {
         description: this.description,
         date: this.date,
         video: this.videoUrl,
+        active: this.active,
       });
     }
     this.isVisible = !this.isVisible;
@@ -89,5 +93,7 @@ export class AdminComponent {
     this.description = '';
     this.title = '';
     this.date = new Date();
+    this.videoUrl = '';
+    this.active = false;
   }
 }

@@ -1,38 +1,59 @@
 <app-page-header [pageTitle]="'Admin'"></app-page-header>
-<div *ngIf="challenges$ | async as data">
-  <p-table [value]="data">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Challenge Title</th>
-        <th>Date</th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-challenge>
-      <tr>
-        <td>{{ challenge.title }}</td>
-        <td>{{ challenge.date?.toDate() | date }}</td>
-        <td>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-text p-button-sm mr-2"
-            (click)="editWod(challenge)"
-          ></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-  <button
-    class="w-screen create-button"
-    pButton
-    type="button"
-    (click)="addWod()"
-    label="CREATE"
-  ></button>
-  <p-sidebar [(visible)]="isVisible" position="right" [baseZIndex]="10000">
-    <div class="pt-4">
+
+<p-tabView>
+  <p-tabPanel header="Exersizes">
+    <div *ngIf="challenges$ | async as data">
+      <div>
+        <p-table [scrollable]="true" scrollHeight="65vh" [value]="data">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Challenge Title</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-challenge>
+            <tr>
+              <td>{{ challenge.title }}</td>
+              <td>{{ challenge.date?.toDate() | date }}</td>
+              <td>{{ challenge.active ? "active" : "draft" }}</td>
+              <td>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-text p-button-sm mr-2"
+                  (click)="editWod(challenge)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <button
+          (click)="addWod()"
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-plus"
+          class="p-button-rounded create-button"
+        ></button>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Users"> users overview... </p-tabPanel>
+  <p-tabPanel header="News"> add news.. </p-tabPanel>
+</p-tabView>
+
+<p-sidebar
+  [fullScreen]="true"
+  [(visible)]="isVisible"
+  position="right"
+  [baseZIndex]="10000"
+>
+    <ng-template pTemplate="header"> <h3>Create</h3></ng-template>  
+  <ng-template pTemplate="content">
+    <div class="">
       <div class="mb-2">
         <span class="p-float-label">
           <input
@@ -71,23 +92,29 @@
           [showIcon]="true"
         ></p-calendar>
       </div>
-
-      <button
-        class="w-full p-button-success mt-2"
-        pButton
-        (click)="saveWod()"
-        type="button"
-        label="Save"
-      ></button>
-
-      <button
-        *ngIf="editMode"
-        class="w-full p-button-danger mt-2"
-        pButton
-        (click)="deleteWod()"
-        type="button"
-        label="Delete"
-      ></button>
+      <div class="flex align-items-center mb-2 mt-2">
+        <label class="mr-2" for="">Active</label>
+        <p-inputSwitch [(ngModel)]="active"></p-inputSwitch>
+      </div>
     </div>
-  </p-sidebar>
-</div>
+  </ng-template>
+   
+  <ng-template pTemplate="footer">
+    <button
+      class="w-full p-button-success mt-2"
+      pButton
+      (click)="saveWod()"
+      type="button"
+      label="Save"
+    ></button>
+
+    <button
+      *ngIf="editMode"
+      class="w-full p-button-danger mt-2"
+      pButton
+      (click)="deleteWod()"
+      type="button"
+      label="Delete"
+    ></button>
+  </ng-template>
+</p-sidebar>

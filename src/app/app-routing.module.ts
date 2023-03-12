@@ -1,19 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InstallComponent } from './components/install/install.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { ChallengeComponent } from './pages/challenge/challenge.component';
 import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { VerifyMailComponent } from './pages/verify-mail/verify-mail.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { AuthGuard } from './utils/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: InstallComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'challenges', component: ChallengeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'sign-in', component: SignInComponent },
+  { path: 'sign-up', component: SignUpComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'challenges',
+    component: ChallengeComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'profile', component: ProfileComponent },
+  { path: 'verify-email-address', component: VerifyMailComponent },
 ];
 
 @NgModule({
