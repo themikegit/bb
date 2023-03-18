@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-video-frame',
   template: `
-    <div>
+    <div *ngIf="videoUrl">
       <iframe
         [src]="videoUrl | videoUrl"
         width="100%"

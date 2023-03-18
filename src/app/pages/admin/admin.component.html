@@ -4,7 +4,12 @@
   <p-tabPanel header="Exersizes">
     <div *ngIf="challenges$ | async as data">
       <div>
-        <p-table [scrollable]="true" scrollHeight="65vh" [value]="data">
+        <p-table
+          [globalFilterFields]="['status']"
+          [scrollable]="true"
+          scrollHeight="65vh"
+          [value]="data"
+        >
           <ng-template pTemplate="header">
             <tr>
               <th>Challenge Title</th>
@@ -41,8 +46,45 @@
       </div>
     </div>
   </p-tabPanel>
-  <p-tabPanel header="Users"> users overview... </p-tabPanel>
-  <p-tabPanel header="News"> add news.. </p-tabPanel>
+  <!-- <p-tabPanel header="Users"> </p-tabPanel> -->
+  <p-tabPanel header="News">
+    <div *ngIf="news$ | async as data">
+      <div>
+        <p-table [scrollable]="true" scrollHeight="65vh" [value]="data">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Title</th>
+
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-news>
+            <tr>
+              <td>{{ news.title }}</td>
+
+              <td>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-text p-button-sm mr-2"
+                  (click)="editNews(news)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <button
+          (click)="addNews()"
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-plus"
+          class="p-button-rounded create-button"
+        ></button>
+      </div>
+    </div>
+  </p-tabPanel>
 </p-tabView>
 
 <p-sidebar
@@ -53,7 +95,7 @@
 >
     <ng-template pTemplate="header"> <h3>Create</h3></ng-template>  
   <ng-template pTemplate="content">
-    <div class="">
+    <div class="mt-4">
       <div class="mb-2">
         <span class="p-float-label">
           <input
@@ -66,13 +108,13 @@
           <label for="float-input">Title</label>
         </span>
       </div>
-      <div class="mb-2">
+      <div class="mb-3">
         <p-editor
           [(ngModel)]="description"
           [style]="{ height: '220px' }"
         ></p-editor>
       </div>
-      <div class="mb-2">
+      <div class="mb-3">
         <span class="p-float-label">
           <input
             class="w-full"
@@ -84,7 +126,7 @@
           <label for="float-input">VideoURL</label>
         </span>
       </div>
-      <div class="mb-2">
+      <div class="mb-3">
         <p-calendar
           appendTo="body"
           class="w-full"
@@ -92,7 +134,7 @@
           [showIcon]="true"
         ></p-calendar>
       </div>
-      <div class="flex align-items-center mb-2 mt-2">
+      <div class="flex align-items-center mb-3 mt-3">
         <label class="mr-2" for="">Active</label>
         <p-inputSwitch [(ngModel)]="active"></p-inputSwitch>
       </div>
@@ -113,6 +155,56 @@
       class="w-full p-button-danger mt-2"
       pButton
       (click)="deleteWod()"
+      type="button"
+      label="Delete"
+    ></button>
+  </ng-template>
+</p-sidebar>
+
+<p-sidebar
+  [fullScreen]="true"
+  [(visible)]="isVisibleNews"
+  position="right"
+  [baseZIndex]="10000"
+>
+    <ng-template pTemplate="header"> <h3>Create</h3></ng-template>  
+  <ng-template pTemplate="content">
+    <div class="">
+      <div class="mb-2">
+        <span class="p-float-label">
+          <input
+            class="w-full"
+            id="float-input"
+            type="text"
+            pInputText
+            [(ngModel)]="newsTitle"
+          />
+          <label for="float-input">Title</label>
+        </span>
+      </div>
+      <div class="mb-2">
+        <p-editor
+          [(ngModel)]="newsDescription"
+          [style]="{ height: '220px' }"
+        ></p-editor>
+      </div>
+    </div>
+  </ng-template>
+   
+  <ng-template pTemplate="footer">
+    <button
+      class="w-full p-button-success mt-2"
+      pButton
+      (click)="saveNews()"
+      type="button"
+      label="Save"
+    ></button>
+
+    <button
+      *ngIf="editMode"
+      class="w-full p-button-danger mt-2"
+      pButton
+      (click)="deleteNews()"
       type="button"
       label="Delete"
     ></button>

@@ -21,7 +21,7 @@ const routes: Routes = [
     component: ChallengeComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'verify-email-address', component: VerifyMailComponent },
 ];
 

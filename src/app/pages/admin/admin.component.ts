@@ -16,14 +16,21 @@ export class AdminComponent {
     private auth: AngularFireAuth
   ) {}
   challenges$!: Observable<any>;
+  news$!: Observable<any>;
   isVisible: boolean = false;
+  isVisibleNews: boolean = false;
+
   selectedWod: any;
+  selectedNews: any;
   selectedRow: any;
 
   description!: string;
   title!: string;
   date!: Date;
   videoUrl!: string;
+
+  newsTitle!: string;
+  newsDescription!: string;
 
   editMode!: boolean;
 
@@ -37,6 +44,19 @@ export class AdminComponent {
           return wods.map((w: any) => {
             const data = w.payload.doc.data();
             const id = w.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+
+    this.news$ = this.afs
+      .collection('/news')
+      .snapshotChanges()
+      .pipe(
+        map((news: any) => {
+          return news.map((n: any) => {
+            const data = n.payload.doc.data();
+            const id = n.payload.doc.id;
             return { id, ...data };
           });
         })
@@ -86,6 +106,40 @@ export class AdminComponent {
   deleteWod() {
     this.afs.collection('wod').doc(this.selectedWod.id).delete();
     this.isVisible = !this.isVisible;
+    this.resetForm();
+  }
+
+  addNews() {
+    this.editMode = false;
+    this.isVisibleNews = !this.isVisibleNews;
+    this.resetForm();
+  }
+  saveNews() {
+    if (this.editMode) {
+      this.afs.collection('news').doc(this.selectedNews.id).update({
+        title: this.newsTitle,
+        description: this.newsDescription,
+      });
+    }
+    if (!this.editMode) {
+      this.afs.collection('news').add({
+        title: this.newsTitle,
+        description: this.newsDescription,
+      });
+    }
+    this.isVisibleNews = !this.isVisibleNews;
+    this.resetForm();
+  }
+  editNews(news: any) {
+    this.editMode = true;
+    this.selectedNews = news;
+    this.newsTitle = news.title;
+    this.newsDescription = news.description;
+    this.isVisibleNews = !this.isVisibleNews;
+  }
+  deleteNews() {
+    this.afs.collection('news').doc(this.selectedNews.id).delete();
+    this.isVisibleNews = !this.isVisibleNews;
     this.resetForm();
   }
 

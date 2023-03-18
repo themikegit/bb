@@ -31,14 +31,14 @@
      
     <ng-template pTemplate="footer">
       <button
-        *ngIf="selectedChc.status !== 'COMPLETED'"
         class="w-full m-1"
         pButton
         type="button"
         label="COMPLETE"
         (click)="completeWod()"
-      ></button
-    ></ng-template>
+        [disabled]="selectedChc.status === 'COMPLETED'"
+      ></button>
+    </ng-template>
     <div></div>
   </p-sidebar>
   <p-toast position="top-center"></p-toast>

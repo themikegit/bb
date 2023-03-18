@@ -1,4 +1,24 @@
 <app-page-header [pageTitle]="'News'"></app-page-header>
 
-<p>Welcome back! User</p>
-<h3>news</h3>
+<div *ngIf="news$ | async as allNews">
+  <div
+    (click)="openNews(news)"
+    class="surface-card pl-4 p-1 mb-1 cursor-pointer"
+    *ngFor="let news of allNews"
+  >
+    <h3>{{ news.title }}</h3>
+  </div>
+</div>
+
+<p-sidebar
+  [fullScreen]="true"
+  [(visible)]="isVisible"
+  position="right"
+  [baseZIndex]="10000"
+>
+    <ng-template pTemplate="header"> {{ selectedNews.title }}</ng-template>  
+  <ng-template pTemplate="content">
+    <div [innerHTML]="selectedNews.description"></div>
+  </ng-template>
+   
+</p-sidebar>
