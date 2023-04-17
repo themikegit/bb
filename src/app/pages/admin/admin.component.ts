@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 
@@ -24,18 +25,32 @@ export class AdminComponent {
   selectedNews: any;
   selectedRow: any;
 
-  description!: string;
-  title!: string;
-  date!: Date;
-  videoUrl!: string;
-
   newsTitle!: string;
   newsDescription!: string;
 
   editMode!: boolean;
 
   active!: boolean;
+
+  wodForm = new FormGroup({
+    title: new FormControl(),
+    active: new FormControl(),
+
+    description1: new FormControl(),
+    video1: new FormControl(),
+
+    description2: new FormControl(),
+    video2: new FormControl(),
+
+    description3: new FormControl(),
+    video3: new FormControl(),
+
+    description4: new FormControl(),
+    video4: new FormControl(),
+  });
+
   ngOnInit() {
+    this.active = true;
     this.challenges$ = this.afs
       .collection('/wod')
       .snapshotChanges()
@@ -66,11 +81,8 @@ export class AdminComponent {
   editWod(ch: any) {
     this.editMode = true;
     this.selectedWod = ch;
-    this.title = ch.title;
-    this.description = ch.description;
-    this.videoUrl = ch.video;
+    this.wodForm.patchValue(ch);
     this.isVisible = !this.isVisible;
-    this.date = ch.date?.toDate();
     this.active = ch.active;
   }
 
@@ -82,22 +94,15 @@ export class AdminComponent {
 
   saveWod() {
     if (this.editMode) {
-      this.afs.collection('wod').doc(this.selectedWod.id).update({
-        title: this.title,
-        description: this.description,
-        date: this.date,
-        video: this.videoUrl,
-        active: this.active,
-      });
+      this.afs
+        .collection('wod')
+        .doc(this.selectedWod.id)
+        .update(this.wodForm.value);
     }
     if (!this.editMode) {
-      this.afs.collection('wod').add({
-        title: this.title,
-        description: this.description,
-        date: this.date,
-        video: this.videoUrl,
-        active: this.active,
-      });
+      const body: any = this.wodForm.value;
+      body.date = new Date();
+      this.afs.collection('wod').add(body);
     }
     this.isVisible = !this.isVisible;
     this.resetForm();
@@ -144,10 +149,7 @@ export class AdminComponent {
   }
 
   resetForm() {
-    this.description = '';
-    this.title = '';
-    this.date = new Date();
-    this.videoUrl = '';
     this.active = false;
+    this.wodForm.reset();
   }
 }

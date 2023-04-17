@@ -29,9 +29,15 @@ export class ChallengeComponent {
   selectedChc = {
     id: '',
     title: '',
-    description: '',
+    description1: '',
+    video1: '',
+    description2: '',
+    video2: '',
+    description3: '',
+    video3: '',
+    description4: '',
+    video4: '',
     status: '',
-    video: '',
   };
 
   ngOnInit() {

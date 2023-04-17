@@ -93,54 +93,118 @@
   position="right"
   [baseZIndex]="10000"
 >
-    <ng-template pTemplate="header"> <h3>Create</h3></ng-template>  
+    <ng-template pTemplate="header"> <h3>Create WOD</h3></ng-template>  
   <ng-template pTemplate="content">
     <div class="mt-4">
-      <div class="mb-2">
-        <span class="p-float-label">
-          <input
-            class="w-full"
-            id="float-input"
-            type="text"
-            pInputText
-            [(ngModel)]="title"
-          />
-          <label for="float-input">Title</label>
-        </span>
-      </div>
-      <div class="mb-3">
-        <p-editor
-          [(ngModel)]="description"
-          [style]="{ height: '220px' }"
-        ></p-editor>
-      </div>
-      <div class="mb-3">
-        <span class="p-float-label">
-          <input
-            class="w-full"
-            id="float-input"
-            type="text"
-            pInputText
-            [(ngModel)]="videoUrl"
-          />
-          <label for="float-input">VideoURL</label>
-        </span>
-      </div>
-      <div class="mb-3">
-        <p-calendar
-          appendTo="body"
-          class="w-full"
-          [(ngModel)]="date"
-          [showIcon]="true"
-        ></p-calendar>
-      </div>
-      <div class="flex align-items-center mb-3 mt-3">
-        <label class="mr-2" for="">Active</label>
-        <p-inputSwitch [(ngModel)]="active"></p-inputSwitch>
-      </div>
+      <form [formGroup]="wodForm">
+        <div class="flex">
+          <div class="flex align-items-center mr-2">
+            <label class="mr-2" for="">Active</label>
+            <p-inputSwitch
+              formControlName="active"
+              [(ngModel)]="active"
+            ></p-inputSwitch>
+          </div>
+
+          <span class="p-float-label w-full">
+            <input
+              class="w-full"
+              id="float-input"
+              type="text"
+              pInputText
+              formControlName="title"
+            />
+            <label for="float-input">Title</label>
+          </span>
+        </div>
+        <!-- set -->
+        <div class="p-2">
+          <div class="mb-3">
+            <div class="mb-3">
+              <p-editor
+                formControlName="description1"
+                [style]="{ height: '220px' }"
+              ></p-editor>
+            </div>
+            <div class="mb-3">
+              <span class="p-float-label">
+                <input
+                  class="w-full"
+                  id="float-input"
+                  type="text"
+                  pInputText
+                  formControlName="video1"
+                />
+                <label for="float-input">VideoURL</label>
+              </span>
+            </div>
+          </div>
+          <div class="mb-2">
+            <div class="mb-3">
+              <p-editor
+                formControlName="description2"
+                [style]="{ height: '220px' }"
+              ></p-editor>
+            </div>
+            <div class="mb-3">
+              <span class="p-float-label">
+                <input
+                  class="w-full"
+                  id="float-input"
+                  type="text"
+                  pInputText
+                  formControlName="video2"
+                />
+                <label for="float-input">VideoURL</label>
+              </span>
+            </div>
+          </div>
+          <div class="mb-2">
+            <div class="mb-3">
+              <p-editor
+                formControlName="description3"
+                [style]="{ height: '220px' }"
+              ></p-editor>
+            </div>
+            <div class="mb-3">
+              <span class="p-float-label">
+                <input
+                  class="w-full"
+                  id="float-input"
+                  type="text"
+                  pInputText
+                  formControlName="video3"
+                />
+                <label for="float-input">VideoURL</label>
+              </span>
+            </div>
+          </div>
+          <div class="mb-2">
+            <div class="mb-3">
+              <p-editor
+                formControlName="description4"
+                [style]="{ height: '220px' }"
+              ></p-editor>
+            </div>
+            <div class="mb-3">
+              <span class="p-float-label">
+                <input
+                  class="w-full"
+                  id="float-input"
+                  type="text"
+                  pInputText
+                  formControlName="video4"
+                />
+                <label for="float-input">VideoURL</label>
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </ng-template>
    
+
   <ng-template pTemplate="footer">
     <button
       class="w-full p-button-success mt-2"
@@ -167,7 +231,7 @@
   position="right"
   [baseZIndex]="10000"
 >
-    <ng-template pTemplate="header"> <h3>Create</h3></ng-template>  
+    <ng-template pTemplate="header"> <h3>Create News</h3></ng-template>  
   <ng-template pTemplate="content">
     <div class="">
       <div class="mb-2">

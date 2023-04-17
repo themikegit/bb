@@ -32,7 +32,10 @@ import { Observable } from 'rxjs';
         class=" p-button-lg p-button-rounded  p-button-text"
       ></button>
       <button
-        *ngIf="user.uid === 'YkdAANXaC2P9K6eb4tF0BMCRNfv1'"
+        *ngIf="
+          user.uid === 'YkdAANXaC2P9K6eb4tF0BMCRNfv1' ||
+          user.uid === 'yLo8VWJG0vaieyJtKdLomjUpUhV2'
+        "
         routerLink="admin"
         pButton
         pRipple

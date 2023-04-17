@@ -25,9 +25,18 @@
     >
      
     <ng-template pTemplate="content">
-      <div [innerHTML]="selectedChc.description"></div>
-      <app-video-frame [videoUrl]="selectedChc.video"></app-video-frame
-    ></ng-template>
+      <div [innerHTML]="selectedChc.description1"></div>
+      <app-video-frame [videoUrl]="selectedChc.video1"></app-video-frame>
+
+      <div [innerHTML]="selectedChc.description2"></div>
+      <app-video-frame [videoUrl]="selectedChc.video2"></app-video-frame>
+
+      <div [innerHTML]="selectedChc.description3"></div>
+      <app-video-frame [videoUrl]="selectedChc.video3"></app-video-frame>
+
+      <div [innerHTML]="selectedChc.description4"></div>
+      <app-video-frame [videoUrl]="selectedChc.video4"></app-video-frame>
+    </ng-template>
      
     <ng-template pTemplate="footer">
       <button

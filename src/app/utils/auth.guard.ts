@@ -13,6 +13,13 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
+
+  private admins = [
+    'yLo8VWJG0vaieyJtKdLomjUpUhV2',
+    'YkdAANXaC2P9K6eb4tF0BMCRNfv1',
+  ];
+  private user = JSON.parse(localStorage.getItem('user')!).uid;
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -21,8 +28,14 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!JSON.parse(localStorage.getItem('user')!)) {
+    if (!this.user) {
       this.router.navigate(['sign-in']);
+    }
+
+    if (route.routeConfig?.path === 'admin') {
+      this.admins.includes(this.user)
+        ? true
+        : this.router.navigate(['sign-in']);
     }
 
     return true;
