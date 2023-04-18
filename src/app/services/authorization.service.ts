@@ -37,7 +37,7 @@ export class AuthorizationService {
       (user) => {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
-        this.router.navigate(['challenges']);
+        this.router.navigate(['/challenges']);
       },
       (error) => {
         window.alert(error.message);
@@ -69,7 +69,7 @@ export class AuthorizationService {
     return this.fireAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
-        this.router.navigate(['challenges']);
+        this.router.navigate(['/challenges']);
       });
   }
 
