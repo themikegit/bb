@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     'yLo8VWJG0vaieyJtKdLomjUpUhV2',
     'YkdAANXaC2P9K6eb4tF0BMCRNfv1',
   ];
-  private user = JSON.parse(localStorage.getItem('user')!).uid;
+  private user = JSON.parse(localStorage.getItem('user')!)?.uid;
 
   canActivate(
     route: ActivatedRouteSnapshot,
