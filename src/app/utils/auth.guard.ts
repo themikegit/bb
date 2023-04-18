@@ -33,9 +33,11 @@ export class AuthGuard implements CanActivate {
     }
 
     if (route.routeConfig?.path === 'admin') {
-      this.admins.includes(this.user)
-        ? true
-        : this.router.navigate(['sign-in']);
+      if (this.admins.includes(this.user)) {
+        return true;
+      } else {
+        this.router.navigate(['sign-in']);
+      }
     }
 
     return true;
