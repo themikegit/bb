@@ -33,7 +33,7 @@ import { Observable } from 'rxjs';
       ></button>
       <button
         *ngIf="
-          user.uid === 'YkdAANXaC2P9K6eb4tF0BMCRNfv1' ||
+          user.uid === 'rLrCiR8gUfNoi680yg8G944kQg33' ||
           user.uid === 'yLo8VWJG0vaieyJtKdLomjUpUhV2'
         "
         routerLink="admin"
